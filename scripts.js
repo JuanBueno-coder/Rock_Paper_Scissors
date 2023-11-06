@@ -7,27 +7,46 @@ ver quien gana
 dar ganador
 */
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
+
+
+function getComputerChoice() {
   
-function getComputerChoice(){
-    let election = getRandomInt(3);
-    if ( election == 0){return 'paper'
-       console.log('Computer has select paper');
-    }
-    if(election == 1){return 'rock'
-       console.log('Computer has select rock');
-    }
-    if(election == 2){return 'scissors'
-       console.log('Computer has select scissors');
-    }
+  let election = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+  if (election == 1) return 'paper';
+
+  if (election == 2) return 'rock';
+
+  if (election == 3) return 'scissors';
 }
-function playRound(playerSelection, computerSelection) {
-if(playerSelection==computerSelection){
-    return console.log("")
+function playerMove(){
+  return prompt().toLowerCase();
 }
+function playRound() {
+  let playerSelection = playerMove();
+  let computerSelection = getComputerChoice();
+
+  if (playerSelection == computerSelection) {
+    console.log("Tie");
+  } else if (
+    (playerSelection == 'rock' && computerSelection == 'scissors') ||
+    (playerSelection == 'paper' && computerSelection == 'rock') ||
+    (playerSelection == 'scissors' && computerSelection == 'paper')
+  ) {
+    console.log("You win");
+  } else {
+    console.log("You lose");
   }
-const playerSelection ="rock";
-const computerSelection =getComputerChoice();
-console.log(computerSelection);
+}
+
+
+
+function play() {
+  playRound()
+  playRound()
+  playRound()
+  playRound()
+  playRound()
+};
+play();
+
+
