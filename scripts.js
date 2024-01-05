@@ -1,52 +1,75 @@
-console.log('Hello world');
-/*Juego se compone de:
-seleccion del ordenador
-    seleccionar uno de los tres movimientos posibles
-seleccion del player
-ver quien gana
-dar ganador
-*/
-
-
+let playerSelection;
+let counterWinsPlayer=0;
+let counterWinsComputer=0;
 
 function getComputerChoice() {
-  
-  let election = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-  if (election == 1) return 'paper';
-
-  if (election == 2) return 'rock';
-
-  if (election == 3) return 'scissors';
+  let election = Math.floor(Math.random() * 3) + 1;
+  if (election === 1) return 'paper';
+  if (election === 2) return 'rock';
+  if (election === 3) return 'scissors';
 }
-function playerMove(){
-  return prompt().toLowerCase();
+
+function playerMove(selection) {
+  playerSelection = selection;
 }
+
 function playRound() {
-  let playerSelection = playerMove();
   let computerSelection = getComputerChoice();
-
-  if (playerSelection == computerSelection) {
+  let result =document.getElementById("resultText");
+  if (playerSelection === computerSelection) {
+    const para = document.createElement("p");
+    const node = document.createTextNode("Tie");
+    para.appendChild(node);
+    result.appendChild(para);
     console.log("Tie");
   } else if (
-    (playerSelection == 'rock' && computerSelection == 'scissors') ||
-    (playerSelection == 'paper' && computerSelection == 'rock') ||
-    (playerSelection == 'scissors' && computerSelection == 'paper')
+    (playerSelection === 'rock' && computerSelection === 'scissors') ||
+    (playerSelection === 'paper' && computerSelection === 'rock') ||
+    (playerSelection === 'scissors' && computerSelection === 'paper')
   ) {
-    console.log("You win");
+    const para = document.createElement("p");
+    const node = document.createTextNode("You win");
+    para.appendChild(node);
+    result.appendChild(para);
+    counterWinsPlayer++;
   } else {
-    console.log("You lose");
+    const para = document.createElement("p");
+    const node = document.createTextNode("You lose");
+    para.appendChild(node);
+    result.appendChild(para);
+    counterWinsComputer++;
   }
+  if(counterWinsPlayer==5){
+    const para = document.createElement("p");
+    const node = document.createTextNode("You win the game");
+    para.appendChild(node);
+    result.appendChild(para);
+}else if(counterWinsComputer==5){
+    const para = document.createElement("p");
+    const node = document.createTextNode("You lose the game");
+    para.appendChild(node);
+    result.appendChild(para);
+}
 }
 
-
-
 function play() {
-  playRound()
-  playRound()
-  playRound()
-  playRound()
-  playRound()
-};
-play();
+  playRound();
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById("rockBtn").addEventListener("click", function() {
+    playerMove('rock');
+    playRound();
+  });
 
+  document.getElementById("scissorsBtn").addEventListener("click", function() {
+    playerMove('scissors');
+    playRound();
+  });
+
+  document.getElementById("paperBtn").addEventListener("click", function() {
+    playerMove('paper');
+    playRound();
+  });
+
+});
